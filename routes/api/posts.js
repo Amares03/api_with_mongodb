@@ -56,4 +56,17 @@ router.patch('/:id', async(req,res)=>{
     }
 });
 
+// @route GET api/posts/id
+//@desc get an post
+router.get('/:id', async(req,res)=>{
+    try {
+        const posts = await Posts.findById(req.params.id);
+        if(!posts) throw Error(`Id not Found Try Again`);
+        res.status(200).json(posts);
+    } catch (error) {
+        res.status(400).json({msg:error});
+    }
+});
+
+
 module.exports = router;
