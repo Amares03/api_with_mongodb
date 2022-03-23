@@ -60,9 +60,9 @@ router.patch('/:id', async(req,res)=>{
 //@desc get an post
 router.get('/:id', async(req,res)=>{
     try {
-        const posts = await Posts.findById(req.params.id);
-        if(!posts) throw Error(`Id not Found Try Again`);
-        res.status(200).json(posts);
+        const post = await Posts.findById(req.params.id);
+        if(!post) throw Error(`Id not Found Try Again`);
+        res.status(200).json(post);
     } catch (error) {
         res.status(400).json({msg:error});
     }
