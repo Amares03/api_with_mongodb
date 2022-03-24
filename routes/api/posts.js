@@ -4,27 +4,82 @@ const router = express.Router();
 const Posts = require('../../models/Posts');
 
 
-import * as postsJs from '../../controllers/posts';
+
+
+
+//@desc get all post
+const getAllPosts = async (req,res)=>{
+    try {
+        const posts = await Posts.find();
+        if(!posts) throw Error(`No Items Here`);
+        res.status(200).json(posts);
+    } catch (error) {
+        res.status(400).json({msg:error});
+    }
+}
+
+
+//@desc create an post
+const postPosts = async (req,res)=>{
+    const newPost = new Posts(req.body);
+ 
+    try {
+        const post = await newPost.save();
+        if(!post) throw Error(`Something went wrong while saving the post`);
+ 
+        res.status(200).json(post);
+    } catch (error) {
+        res.status(400).json({msg:error});
+    }
+ }
+ 
+ //@desc delete an post
+ const deleteById = async (req,res)=>{
+    try {
+        const posts = await Posts.findByIdAndDelete(req.params.id);
+        if(!posts) throw Error(`No Items Found`);
+        res.status(200).json({success:true});
+    } catch (error) {
+        res.status(400).json({msg:error});
+    }
+}
+
+//@desc update an post
+const updateById = async(req,res)=>{
+    try {
+        const posts = await Posts.findByIdAndUpdate(req.params.id,req.body);
+        if(!posts) throw Error(`Something went wrong while updating the post`);
+        res.status(200).json({success:true});
+    } catch (error) {
+        res.status(400).json({msg:error});
+    }
+}
+
+//@desc get an post
+const getById = async(req,res)=>{
+    try {
+        const post = await Posts.findById(req.params.id);
+        if(!post) throw Error(`Id not Found Try Again`);
+        res.status(200).json(post);
+    } catch (error) {
+        res.status(400).json({msg:error});
+    }
+}
 
 // @route GET api/posts
-//@desc get all post
-router.get('/', postsJs.getAllPosts);
+router.get('/',getAllPosts);
 
 // @route POST api/posts
-//@desc create an post
-router.post('/', postsJs.postPosts);
+router.post('/', postPosts);
 
 // @route DELETE api/posts/id
-//@desc delete an post
-router.delete('/:id', postsJs.deleteById);
+router.delete('/:id', deleteById);
 
 // @route UPDATE api/posts/id
-//@desc update an post
-router.patch('/:id', postsJs.updateById);
+router.patch('/:id', updateById);
 
 // @route GET api/posts/id
-//@desc get an post
-router.get('/:id', postsJs.getById);
+router.get('/:id', getById);
 
 
 module.exports = router;

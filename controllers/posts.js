@@ -1,5 +1,5 @@
 // posts Model
-const Posts = require('../../models/Posts');
+// const Posts = require('../../models/Posts');
 
 
 
