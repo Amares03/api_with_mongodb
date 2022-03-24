@@ -4,9 +4,6 @@ const router = express.Router();
 const Posts = require('../../models/Posts');
 
 
-
-
-
 //@desc get all post
 const getAllPosts = async (req,res)=>{
     try {
@@ -33,6 +30,7 @@ const postPosts = async (req,res)=>{
     }
  }
  
+
  //@desc delete an post
  const deleteById = async (req,res)=>{
     try {
@@ -43,6 +41,7 @@ const postPosts = async (req,res)=>{
         res.status(400).json({msg:error});
     }
 }
+
 
 //@desc update an post
 const updateById = async(req,res)=>{
@@ -55,6 +54,7 @@ const updateById = async(req,res)=>{
     }
 }
 
+
 //@desc get an post
 const getById = async(req,res)=>{
     try {
@@ -65,6 +65,7 @@ const getById = async(req,res)=>{
         res.status(400).json({msg:error});
     }
 }
+
 
 // @route GET api/posts
 router.get('/',getAllPosts);
